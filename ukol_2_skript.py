@@ -19,12 +19,12 @@ def containers_file_open(container_file):
     return features
 
 def container_access_filter(features):
-    containers_coords_wgs = []
+    containers_coords_sjtsk = []
     for feature in features:
         if feature['properties']['PRISTUP'] == 'volně':
             souradnice = feature['geometry']['coordinates']
-            containers_coords_wgs.append(souradnice)
-    return containers_coords_wgs
+            containers_coords_sjtsk.append(souradnice)
+    return containers_coords_sjtsk
 
 def address_file_open(address_file):
     try:
@@ -52,13 +52,6 @@ def address_points(addresses):
         positions.append(records)
     return positions
 
-def containers_to_sjtsk(containers_coords_wgs):
-    containers_coords_sjtsk = []
-    transformer = Transformer.from_crs(4326, 5514, always_xy=True)
-    for pt in transformer.itransform(containers_coords_wgs):
-        containers_coords_sjtsk.append(pt)
-    return containers_coords_sjtsk
-
 def address_point_container_distance(positions, containers_coords_sjtsk):
     farthest_distance_address = 'David'
     distances = []
@@ -77,18 +70,17 @@ def address_point_container_distance(positions, containers_coords_sjtsk):
             farthest_distance_address = adresa['adresa']
     return farthest_value, farthest_distance_address, distances
 
-features = containers_file_open("kontejnery.geojson")
-addresses = address_file_open("adresy.geojson")  
-containers_coords_wgs = container_access_filter(features) 
+features = containers_file_open("soubor_kontejnery.geojson")
+addresses = address_file_open("soubor_adresy.geojson")  
+containers_coords_sjtsk = container_access_filter(features) 
 positions = address_points(addresses) 
-containers_coords_sjtsk = containers_to_sjtsk(containers_coords_wgs)
 farthest_value, farthest_distance_address, distances = address_point_container_distance(positions, containers_coords_sjtsk)
   
 mean = statistics.mean(distances)
 median = statistics.median(distances)
 
 print("Celkem načteno", len(positions), "adresních bodů")
-print("Celkem načteno", len(containers_coords_wgs), "kontejnerů na tříděný odpad")
+print("Celkem načteno", len(containers_coords_sjtsk), "kontejnerů na tříděný odpad")
 print("Průměrná vzdálenost z adresního bodu ke kontejneru je:", f"{mean:.0f}", "m")
 print("Medián vzdáleností z adresního bodu ke kontejneru je:", f"{median:.0f}", "m")
 print("Největší vzdálenost ke kontejneru je", f"{farthest_value:.0f}", "m a to z adresy", farthest_distance_address)
