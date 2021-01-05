@@ -3,22 +3,21 @@ from pyproj import Transformer
 from math import hypot 
 
 #Funkce, která otevírá geojson soubory kontejnerů a ošetřuje nekorektní vstupy 
-def containers_file_open(container_file):
+def load_json(file_name):
     try:
-        with open(container_file, encoding = 'utf-8') as f:
-            containers_input = json.load(f)
-            features = containers_input['features']
+        with open(file_name, encoding = 'utf-8') as f:
+            data = json.load(f)
     except ValueError:
-        print(f"Soubor {container_file} je chybný.")
+        print(f"Soubor {file_name} je chybný.")
         exit()
     except FileNotFoundError:
-        print(f"Soubor {container_file} nebyl nalezen.")
+        print(f"Soubor {file_name} nebyl nalezen.")
         exit()
     except PermissionError:
-        print(f"Soubor {container_file} je nepřístupný.")
+        print(f"Soubor {file_name} je nepřístupný.")
         exit()
     
-    return features
+    return data
 
 #Funkce, která vyfiltruje jen ty kontejnery, které jsou volně přístupné 
 def container_access_filter(features):
@@ -28,24 +27,6 @@ def container_access_filter(features):
             souradnice = feature['geometry']['coordinates']
             containers_coords_sjtsk.append(souradnice)
     return containers_coords_sjtsk
-
-#Funkce, která otevírá geojson soubory adres a ošetřuje nekorektní vstupy 
-"""def address_file_open(address_file):
-    try:
-        with open(address_file, encoding = 'utf-8') as f:
-            address_input = json.load(f)
-            addresses = address_input['features']
-    except ValueError:
-        print(f"Soubor {address_file} je chybný.")
-        exit()
-    except FileNotFoundError:
-        print(f"Soubor {address_file} nebyl nalezen.")
-        exit()
-    except PermissionError:
-        print(f"Soubor {address_file} je nepřístupný.")
-        exit()
-    
-    return addresses"""
 
 #Funkce, která převede souřadnice adres z WGS84 do S-JTSK a vrátí list slovníků obsahujících adresu a souřadnice adresního bodu
 def address_points(addresses):
@@ -79,10 +60,10 @@ def address_point_container_distance(positions, containers_coords_sjtsk):
     return farthest_value, farthest_distance_address, distances
 
 #Spuštění výše vypsaných funkcí
-features = containers_file_open("soubor_kontejnery.geojson")
-addresses = address_file_open("soubor_adresy.geojson")  
+features = load_json("soubor_kontejnery.geojson")['features']
+adresses = load_json("soubor_adresy.geojson")['features'] 
 containers_coords_sjtsk = container_access_filter(features) 
-positions = address_points(addresses) 
+positions = address_points(adresses) 
 farthest_value, farthest_distance_address, distances = address_point_container_distance(positions, containers_coords_sjtsk)
 
 #Výpočet průměru a mediánu nejkratších vzdáleností ke kontejnerům  
