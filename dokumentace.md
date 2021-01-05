@@ -13,7 +13,7 @@ Vzhledem k tomu, že souřadnice adresních bodů jsou v souřadnicovém systém
 Stěžejní funkcí programu je `address_point_container_distance`. Ta vrací hned několik důležitých informací. Tou snad úplně hlavní je schopnost zjistit nejkratší vzdálenost ke kontejneru pro každý adresní bod. Dokáže však také zjistit, pro jaký adresní bod je ona vypočítaná nejkratší vzdálenost největší. Pro takový adresní bod navíc vrátí i jeho přesnou adresu (ulice + číslo popisné).
 
 ### Výstupy
-Další nezbytnou součástí programu je spuštění výše popsaných funkcí. Následuje výpočet průměru a mediánu pro nejkratší vzdálenosti ke kontejnerům a k uložení těchto hodnot do proměnných `mean` a `median`. Poslední část programu tvoří samotný výstup. Ten slouží jako sumář hodnot zjištěných hodnot v programu. Mimo jiné zde najdeme i celkový počet adresních bodů a kontejnerů. Všechny tři uvedené hodnoty pro vzdálenost zde byly zaokrouhleny ve formátovacím řetězci.
+Další nezbytnou součástí programu je spuštění výše popsaných funkcí. Následuje výpočet průměru a mediánu pro nejkratší vzdálenosti ke kontejnerům a k uložení těchto hodnot do proměnných `mean` a `median`. Poslední část programu tvoří samotný výstup. Ten slouží jako sumář hodnot zjištěných v programu. Mimo jiné zde najdeme i celkový počet adresních bodů a kontejnerů. Všechny tři uvedené hodnoty pro vzdálenost zde byly zaokrouhleny ve formátovacím řetězci.
 
 Příklad výstupu pro lokalitu Praha, Staré Město:
 ```
