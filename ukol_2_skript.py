@@ -30,8 +30,8 @@ def container_access_filter(features):
     return containers_coords_sjtsk
 
 #Funkce, která otevírá geojson soubory adres a ošetřuje nekorektní vstupy 
-#def address_file_open(address_file):
-    """try:
+"""def address_file_open(address_file):
+    try:
         with open(address_file, encoding = 'utf-8') as f:
             address_input = json.load(f)
             addresses = address_input['features']
@@ -61,7 +61,7 @@ def address_points(addresses):
 #Funkce, která vypočítá nejkratší vzdálenosti ke kontejneru pro každý adresního bod
 #Zároveň funkce vybere největší hodnotu z nejkratších vzdáleností a vrátí ji společně s adresou, pro níž nejvyšší hodnota platí 
 def address_point_container_distance(positions, containers_coords_sjtsk):
-    farthest_distance_address = 'Brno'
+    farthest_distance_address = 'Šalingrad'
     distances = []
     farthest_value = 0
     for adresa in positions:
