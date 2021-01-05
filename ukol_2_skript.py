@@ -53,7 +53,7 @@ def address_points(addresses):
     return positions
 
 def address_point_container_distance(positions, containers_coords_sjtsk):
-    farthest_distance_address = 'misto'
+    farthest_distance_address = 'Filip'
     distances = []
     farthest_value = 0
     for adresa in positions:
